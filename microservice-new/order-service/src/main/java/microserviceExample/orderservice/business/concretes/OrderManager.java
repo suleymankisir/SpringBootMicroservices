@@ -52,7 +52,7 @@ public class OrderManager implements OrderService {
 				.uri("http://inventory-service/api/inventory",uriBuilder -> uriBuilder.queryParam("skuCode", skuCodes).build())
 				.retrieve()
 				.bodyToMono(InventoryResponse[].class)
-				.block();
+				.block();    //WebClient is an asynchronous structure, but the "block" method can be used to synchronize it.
 		
 		boolean allProductsInStock = Arrays.stream(inventoryResponseArray)
 				.allMatch(inventoryResponse -> inventoryResponse.isInStock());
